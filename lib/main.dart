@@ -1,4 +1,4 @@
-import 'package:chatapp/view/login/login_page.dart';
+import 'package:chatapp/view/signup/signup_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blue,
             appBarTheme:
                 const AppBarTheme().copyWith(foregroundColor: Colors.white)),
-        home: const LoginPage(),
+        home: const SignupPage(),
       ),
     );
   }
