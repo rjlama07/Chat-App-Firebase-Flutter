@@ -5,7 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
 class AuthService {
-  Future<Either<String, bool>> userSignUp({
+  static Future<Either<String, bool>> userSignUp({
     required String username,
     required String password,
     required XFile image,
@@ -31,6 +31,28 @@ class AuthService {
       return right(true);
     } on FirebaseAuthException catch (err) {
       return Left(err.message.toString());
+    }
+  }
+
+  static Future<Either<String, bool>> userLogin(
+      String email, String password) async {
+    try {
+      final credentail = await FirebaseInstances.firebaseAuth
+          .signInWithEmailAndPassword(email: email, password: password);
+      return Right(true);
+    } on FirebaseAuthException catch (e) {
+      return left(e.message.toString());
+    }
+  }
+
+  static Future<Either<String, bool>> userLogOut(
+      String email, String password) async {
+    try {
+      final credentail = await FirebaseInstances.firebaseAuth
+          .signInWithEmailAndPassword(email: email, password: password);
+      return Right(true);
+    } on FirebaseAuthException catch (e) {
+      return left(e.message.toString());
     }
   }
 }

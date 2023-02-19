@@ -38,3 +38,14 @@ class ImageProvider extends StateNotifier<XFile?> {
     }
   }
 }
+
+class ShowPassword extends StateNotifier<bool> {
+  ShowPassword(super.state);
+
+  void viewPassword() {
+    state = !state;
+  }
+}
+
+final showPassword =
+    StateNotifierProvider<ShowPassword, bool>((ref) => ShowPassword(false));
