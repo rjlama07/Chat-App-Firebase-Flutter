@@ -14,10 +14,12 @@ class SignupPage extends ConsumerWidget {
     final passwordController = TextEditingController();
     final form = GlobalKey<FormState>();
     final isLogin = ref.watch(commonProvider);
+    final valdator = ref.watch(autoValid);
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: Form(
+          autovalidateMode: valdator,
           key: form,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,6 +44,16 @@ class SignupPage extends ConsumerWidget {
               ),
               TextFormField(
                 controller: emailController,
+                validator: ((value) {
+                  if (value!.isEmpty) {
+                    return "Email field required";
+                  } else if (!RegExp(
+                          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                      .hasMatch(value)) {
+                    return "Invalid email";
+                  }
+                  return null;
+                }),
                 decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.person),
                     hintText: "Email",
@@ -75,8 +87,11 @@ class SignupPage extends ConsumerWidget {
               ),
               InkWell(
                 onTap: (() {
-                  debugPrint(emailController.text);
-                  debugPrint(passwordController.text);
+                  if (form.currentState!.validate()) {
+                    form.currentState!.save();
+                  } else {
+                    ref.read(autoValid.notifier).togle();
+                  }
                 }),
                 child: Container(
                   width: double.maxFinite,

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -8,6 +9,17 @@ class CommonProvider extends StateNotifier<bool> {
   CommonProvider(super.state);
   void togle() {
     state = !state;
+  }
+}
+
+final autoValid =
+    StateNotifierProvider.autoDispose<AutoValidMode, AutovalidateMode>(
+        (ref) => AutoValidMode(AutovalidateMode.disabled));
+
+class AutoValidMode extends StateNotifier<AutovalidateMode> {
+  AutoValidMode(super.state);
+  void togle() {
+    state = AutovalidateMode.onUserInteraction;
   }
 }
 
