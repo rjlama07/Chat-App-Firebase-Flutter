@@ -34,7 +34,7 @@ class ImageProvider extends StateNotifier<XFile?> {
     if (isCamera) {
       state = await _picker.pickImage(source: ImageSource.camera);
     } else {
-      state = await _picker.pickVideo(source: ImageSource.gallery);
+      state = await _picker.pickImage(source: ImageSource.gallery);
     }
   }
 }

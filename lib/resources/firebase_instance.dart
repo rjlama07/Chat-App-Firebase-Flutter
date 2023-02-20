@@ -9,5 +9,5 @@ class FirebaseInstances {
   static FirebaseFirestore firestore = FirebaseFirestore.instance;
   static FirebaseStorage firebaseStorage = FirebaseStorage.instance;
   static FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
-  static FirebaseChatCore fireChat = FirebaseInstances.fireChat;
+  static FirebaseChatCore fireChat = FirebaseChatCore.instance;
 }

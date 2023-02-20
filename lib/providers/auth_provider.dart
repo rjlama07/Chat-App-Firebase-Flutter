@@ -11,13 +11,13 @@ class AuthProvider extends StateNotifier<AuthState> {
     state = state.copyWith(
         isLoad: true, isError: false, isSuccess: false, errMessage: '');
     final response = await AuthService.userSignUp(
-        username: username, password: password, image: image);
+        username: username, password: password, image: image, email: email);
     response.fold((l) {
       state = state.copyWith(
           isError: true, isLoad: false, isSuccess: false, errMessage: l);
     }, (r) {
       state = state.copyWith(
-          isError: true, isLoad: false, isSuccess: false, errMessage: "");
+          isError: false, isLoad: false, isSuccess: true, errMessage: "");
     });
   }
 
@@ -30,7 +30,7 @@ class AuthProvider extends StateNotifier<AuthState> {
           isError: true, isLoad: false, isSuccess: false, errMessage: l);
     }, (r) {
       state = state.copyWith(
-          isError: true, isLoad: false, isSuccess: false, errMessage: "");
+          isError: false, isLoad: false, isSuccess: true, errMessage: "");
     });
   }
 }

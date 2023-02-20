@@ -1,10 +1,12 @@
+import 'dart:io';
+
 import 'package:chatapp/providers/auth_provider.dart';
 import 'package:chatapp/providers/common_provider.dart';
-import 'package:chatapp/services/auth_services.dart';
 import 'package:chatapp/widgets/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class SignupPage extends ConsumerWidget {
   const SignupPage({super.key});
@@ -22,7 +24,7 @@ class SignupPage extends ConsumerWidget {
       authprovider,
       (previous, next) {
         if (next.isError) {
-          SnackShow.showSnackbar(context, next.errMessage, false);
+          SnackShow.showSnackbar(context, next.errMessage, true);
         } else if (next.isSuccess) {
           SnackShow.showSnackbar(context, "Sucess", false);
         }
@@ -39,20 +41,6 @@ class SignupPage extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Spacer(),
-              if (!isLogin)
-                ListTile(
-                  onTap: () {
-                    debugPrint("Photo Upload");
-                  },
-                  horizontalTitleGap: 20.w,
-                  contentPadding: const EdgeInsets.all(0),
-                  leading: const CircleAvatar(
-                    child: Icon(
-                      Icons.person,
-                    ),
-                  ),
-                  title: const Text("Upload photo"),
-                ),
               SizedBox(
                 height: 10.h,
               ),
@@ -113,6 +101,45 @@ class SignupPage extends ConsumerWidget {
               SizedBox(
                 height: 10.h,
               ),
+              if (!isLogin)
+                ListTile(
+                  onTap: () {
+                    Get.defaultDialog(
+                        title: "Select",
+                        content: const Text("Select an image"),
+                        actions: [
+                          TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                                ref
+                                    .read(imageProvider.notifier)
+                                    .imagePick(true);
+                              },
+                              child: const Text("Camera")),
+                          TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                                ref
+                                    .read(imageProvider.notifier)
+                                    .imagePick(false);
+                              },
+                              child: const Text("Gallery"))
+                        ]);
+                  },
+                  horizontalTitleGap: 20.w,
+                  contentPadding: const EdgeInsets.all(0),
+                  leading: CircleAvatar(
+                    child: image != null
+                        ? Image.file(File(image.path))
+                        : const Icon(
+                            Icons.person,
+                          ),
+                  ),
+                  title: const Text("Upload photo"),
+                ),
+              SizedBox(
+                height: 10.h,
+              ),
               InkWell(
                 onTap: auth.isLoad
                     ? null
@@ -124,7 +151,16 @@ class SignupPage extends ConsumerWidget {
                                 emailController.text.trim(),
                                 passwordController.text.trim());
                           } else {
-                            print(auth.errMessage);
+                            if (image != null) {
+                              ref.read(authprovider.notifier).signup(
+                                  emailController.text.trim(),
+                                  passwordController.text.trim(),
+                                  usernameController.text.trim(),
+                                  image);
+                            } else {
+                              SnackShow.showSnackbar(
+                                  context, "Please select an image", true);
+                            }
                           }
                         } else {
                           ref.read(autoValid.notifier).togle();
