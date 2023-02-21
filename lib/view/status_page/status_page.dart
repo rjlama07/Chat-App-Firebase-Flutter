@@ -13,7 +13,7 @@ class StatusPage extends ConsumerWidget {
     final statusprovider = ref.watch(statusProvider);
     return Scaffold(
       body: statusprovider.when(
-        data: (data) => data != null ? HomePage() : const SignupPage(),
+        data: (data) => data != null ? HomePage() : SignupPage(),
         error: (error, stackTrace) => Center(
           child: Text(error.toString()),
         ),

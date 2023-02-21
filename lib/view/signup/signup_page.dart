@@ -9,14 +9,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class SignupPage extends ConsumerWidget {
-  const SignupPage({super.key});
-
+  SignupPage({super.key});
+  final usernameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final form = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context, ref) {
-    final usernameController = TextEditingController();
-    final emailController = TextEditingController();
-    final passwordController = TextEditingController();
-    final form = GlobalKey<FormState>();
     final isLogin = ref.watch(commonProvider);
     final valdator = ref.watch(autoValid);
     final image = ref.watch(imageProvider);
