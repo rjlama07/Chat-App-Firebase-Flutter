@@ -1,3 +1,4 @@
+import 'package:chatapp/resources/firebase_instance.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -12,6 +13,8 @@ class CommonProvider extends StateNotifier<bool> {
   }
 }
 
+final statusProvider =
+    StreamProvider((ref) => FirebaseInstances.firebaseAuth.authStateChanges());
 final autoValid =
     StateNotifierProvider.autoDispose<AutoValidMode, AutovalidateMode>(
         (ref) => AutoValidMode(AutovalidateMode.disabled));

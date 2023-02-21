@@ -49,11 +49,9 @@ class AuthService {
     }
   }
 
-  static Future<Either<String, bool>> userLogOut(
-      String email, String password) async {
+  static Future<Either<String, bool>> userLogOut() async {
     try {
-      final credentail = await FirebaseInstances.firebaseAuth
-          .signInWithEmailAndPassword(email: email, password: password);
+      FirebaseInstances.firebaseAuth.signOut();
       return Right(true);
     } on FirebaseAuthException catch (e) {
       return left(e.message.toString());

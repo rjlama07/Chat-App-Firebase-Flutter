@@ -21,6 +21,19 @@ class AuthProvider extends StateNotifier<AuthState> {
     });
   }
 
+  Future<void> logout() async {
+    state = state.copyWith(
+        isLoad: true, isError: false, isSuccess: false, errMessage: '');
+    final response = await AuthService.userLogOut();
+    response.fold((l) {
+      state = state.copyWith(
+          isError: true, isLoad: false, isSuccess: false, errMessage: l);
+    }, (r) {
+      state = state.copyWith(
+          isError: false, isLoad: false, isSuccess: true, errMessage: "");
+    });
+  }
+
   Future<void> login(String email, String password) async {
     state = state.copyWith(
         isLoad: true, isError: false, isSuccess: false, errMessage: '');

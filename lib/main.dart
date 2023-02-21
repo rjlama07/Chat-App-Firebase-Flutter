@@ -1,5 +1,6 @@
 import 'package:chatapp/view/signup/signup_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:chatapp/view/status_page/status_page.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,7 +13,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  FirebaseAuth.instance.signOut;
+
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blue,
             appBarTheme:
                 const AppBarTheme().copyWith(foregroundColor: Colors.white)),
-        home: const SignupPage(),
+        home: const StatusPage(),
       ),
     );
   }
