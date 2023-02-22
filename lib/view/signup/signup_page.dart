@@ -101,7 +101,7 @@ class SignupPage extends ConsumerWidget {
                 height: 10.h,
               ),
               if (!isLogin)
-                ListTile(
+                InkWell(
                   onTap: () {
                     Get.defaultDialog(
                         title: "Select",
@@ -125,16 +125,18 @@ class SignupPage extends ConsumerWidget {
                               child: const Text("Gallery"))
                         ]);
                   },
-                  horizontalTitleGap: 20.w,
-                  contentPadding: const EdgeInsets.all(0),
-                  leading: CircleAvatar(
-                    child: image != null
-                        ? Image.file(File(image.path))
-                        : const Icon(
-                            Icons.person,
-                          ),
-                  ),
-                  title: const Text("Upload photo"),
+                  child: Container(
+                      height: 80.h,
+                      width: double.maxFinite,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.blueAccent),
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      child: image != null
+                          ? Image.file(File(image.path))
+                          : const Center(
+                              child: Text("Upload Image"),
+                            )),
                 ),
               SizedBox(
                 height: 10.h,
