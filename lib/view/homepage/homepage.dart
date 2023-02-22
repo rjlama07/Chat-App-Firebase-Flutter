@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chatapp/providers/auth_provider.dart';
 import 'package:chatapp/resources/firebase_instance.dart';
 import 'package:chatapp/services/auth_services.dart';
@@ -14,6 +13,7 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final userData = ref.watch(userStream(user!.uid));
+    final userstreams = ref.watch(userstream);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -30,12 +30,13 @@ class HomePage extends ConsumerWidget {
               children: [
                 CircleAvatar(
                   backgroundImage: NetworkImage(data.imageUrl.toString()),
-                  radius: 22.h,
+                  radius: 18.h,
                   backgroundColor: Colors.blue,
                 ),
                 SizedBox(
                   height: 10.h,
                 ),
+                Center(child: Text(data.firstName.toString())),
                 Center(child: Text(data.metadata!['email']))
               ],
             )),
@@ -73,6 +74,49 @@ class HomePage extends ConsumerWidget {
           child: CircularProgressIndicator(),
         ),
       )),
+      body: Column(
+        children: [
+          SizedBox(
+            height: 55.h,
+            width: double.maxFinite,
+            child: userstreams.when(
+              data: (data) => ListView.builder(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 12.h, vertical: 12.w),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: data.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      margin: EdgeInsets.only(right: 16.w),
+                      child: Column(
+                        children: [
+                          CircleAvatar(
+                            radius: 18.h,
+                            backgroundImage:
+                                NetworkImage("${data[index].imageUrl}"),
+                          ),
+                          SizedBox(
+                            height: 2.h,
+                          ),
+                          Text(
+                            data[index].firstName.toString(),
+                            style: TextStyle(
+                                fontSize: 30.sp, fontWeight: FontWeight.w500),
+                          )
+                        ],
+                      ),
+                    );
+                  }),
+              error: (error, stackTrace) =>
+                  const Center(child: Icon(Icons.error)),
+              loading: () => const Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
