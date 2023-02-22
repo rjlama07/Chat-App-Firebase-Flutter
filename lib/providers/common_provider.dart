@@ -33,11 +33,11 @@ class ImageProvider extends StateNotifier<XFile?> {
   ImageProvider(super.state);
 
   void imagePick(bool isCamera) async {
-    final ImagePicker _picker = ImagePicker();
+    final ImagePicker picker = ImagePicker();
     if (isCamera) {
-      state = await _picker.pickImage(source: ImageSource.camera);
+      state = await picker.pickImage(source: ImageSource.camera);
     } else {
-      state = await _picker.pickImage(source: ImageSource.gallery);
+      state = await picker.pickImage(source: ImageSource.gallery);
     }
   }
 }

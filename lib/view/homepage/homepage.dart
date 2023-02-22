@@ -1,6 +1,7 @@
 import 'package:chatapp/providers/auth_provider.dart';
 import 'package:chatapp/resources/firebase_instance.dart';
 import 'package:chatapp/services/auth_services.dart';
+import 'package:chatapp/view/create_post/create_post.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -42,6 +43,18 @@ class HomePage extends ConsumerWidget {
             )),
             InkWell(
               onTap: () {
+                Get.to(CreatePost());
+              },
+              child: const ListTile(
+                leading: Icon(
+                  Icons.add_to_photos,
+                  color: Colors.red,
+                ),
+                title: Text("Add Post"),
+              ),
+            ),
+            InkWell(
+              onTap: () {
                 Get.defaultDialog(
                     title: "Alert?",
                     content: const Text("Are you sure you want to logout?"),
@@ -66,7 +79,7 @@ class HomePage extends ConsumerWidget {
                 ),
                 title: Text("Signout"),
               ),
-            )
+            ),
           ],
         ),
         error: (error, stackTrace) => Center(child: Text(error.toString())),

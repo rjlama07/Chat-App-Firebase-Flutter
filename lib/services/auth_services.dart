@@ -39,7 +39,7 @@ class AuthService {
       final ref = FirebaseInstances.firebaseStorage
           .ref()
           .child('userImage/${image.name}');
-      final photo = await ref.putFile(File(image.path));
+      await ref.putFile(File(image.path));
       final url = await ref.getDownloadURL();
       final credential = await FirebaseInstances.firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password);
@@ -55,7 +55,6 @@ class AuthService {
 
       return right(true);
     } on FirebaseAuthException catch (err) {
-      print(err.message);
       return Left(err.message.toString());
     }
   }
@@ -63,9 +62,9 @@ class AuthService {
   static Future<Either<String, bool>> userLogin(
       String email, String password) async {
     try {
-      final credentail = await FirebaseInstances.firebaseAuth
+      await FirebaseInstances.firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
-      return Right(true);
+      return const Right(true);
     } on FirebaseAuthException catch (e) {
       return left(e.message.toString());
     }
@@ -74,7 +73,7 @@ class AuthService {
   static Future<Either<String, bool>> userLogOut() async {
     try {
       FirebaseInstances.firebaseAuth.signOut();
-      return Right(true);
+      return const Right(true);
     } on FirebaseAuthException catch (e) {
       return left(e.message.toString());
     }
