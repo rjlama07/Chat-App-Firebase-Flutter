@@ -32,6 +32,10 @@ final imageProvider =
 class ImageProvider extends StateNotifier<XFile?> {
   ImageProvider(super.state);
 
+  void clearImage() {
+    state = null;
+  }
+
   void imagePick(bool isCamera) async {
     final ImagePicker picker = ImagePicker();
     if (isCamera) {

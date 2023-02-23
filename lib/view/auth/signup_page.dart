@@ -201,6 +201,7 @@ class SignupPage extends ConsumerWidget {
                   ),
                   TextButton(
                       onPressed: () {
+                        ref.read(imageProvider.notifier).clearImage();
                         emailController.clear();
                         passwordController.clear();
                         usernameController.clear();
