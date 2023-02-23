@@ -1,8 +1,7 @@
+import 'package:chatapp/view/auth/signup_page.dart';
 import 'package:chatapp/view/homepage/homepage.dart';
-import 'package:chatapp/view/signup/signup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../providers/common_provider.dart';
 
 class StatusPage extends ConsumerWidget {

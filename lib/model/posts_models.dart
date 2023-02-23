@@ -1,3 +1,5 @@
+import 'package:chatapp/view/create_post/create_post.dart';
+
 class Post {
   final String postId;
   final String userId;
@@ -34,4 +36,7 @@ class Like {
     required this.likes,
     required this.usernames,
   });
+  factory Like.fromJson(Map<String, dynamic> json) {
+    return Like(likes: json['likes'], usernames: json['username']);
+  }
 }

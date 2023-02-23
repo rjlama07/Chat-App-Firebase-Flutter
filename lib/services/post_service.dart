@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:chatapp/model/posts_models.dart';
 import 'package:chatapp/resources/firebase_instance.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
@@ -9,6 +10,23 @@ import 'package:image_picker/image_picker.dart';
 class PostService {
   static CollectionReference postDb =
       FirebaseInstances.firestore.collection("posts");
+  // static Stream<List<Post>> getPost() {
+  //   return postDb.snapshots().map((event) => null);
+  // }
+
+  // static List<Post> getPostData(QuerySnapshot snapshot) {
+  //   return snapshot.docs.map((e) {
+  //     final json = e.data as Map<String, dynamic>;
+  //     return Post(
+  //         comments: json['comments'],
+  //         detail: json['detail'],
+  //         title: json['title'],
+  //         imageUrl: json['imageUrl'],
+  //         like: Like.fromJson(json['likes']),
+  //         postId: json['postId'],
+  //         userId: json['userID']);
+  //   });
+  // }
 
   static Future<Either<String, bool>> addPost({
     required String title,

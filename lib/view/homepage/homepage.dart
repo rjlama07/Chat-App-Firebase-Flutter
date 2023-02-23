@@ -43,6 +43,7 @@ class HomePage extends ConsumerWidget {
             )),
             InkWell(
               onTap: () {
+                Navigator.pop(context);
                 Get.to(CreatePost());
               },
               child: const ListTile(

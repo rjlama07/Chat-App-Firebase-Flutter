@@ -201,6 +201,9 @@ class SignupPage extends ConsumerWidget {
                   ),
                   TextButton(
                       onPressed: () {
+                        emailController.clear();
+                        passwordController.clear();
+                        usernameController.clear();
                         ref.read(commonProvider.notifier).togle();
                       },
                       child: Text(
