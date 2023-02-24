@@ -203,6 +203,7 @@ class SignupPage extends ConsumerWidget {
                       onPressed: () {
                         ref.read(imageProvider.notifier).clearImage();
                         emailController.clear();
+                        form.currentState!.reset();
                         passwordController.clear();
                         usernameController.clear();
                         ref.read(commonProvider.notifier).togle();

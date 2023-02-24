@@ -1,5 +1,3 @@
-import 'package:chatapp/view/create_post/create_post.dart';
-
 class Post {
   final String postId;
   final String userId;
