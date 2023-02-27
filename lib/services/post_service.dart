@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:chatapp/model/posts_models.dart';
 import 'package:chatapp/resources/firebase_instance.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
