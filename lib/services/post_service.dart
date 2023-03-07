@@ -3,28 +3,33 @@ import 'package:chatapp/resources/firebase_instance.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../model/posts_models.dart';
+
+final postStream = StreamProvider((ref) => PostService.getPost());
 
 class PostService {
   static CollectionReference postDb =
       FirebaseInstances.firestore.collection("posts");
-  // static Stream<List<Post>> getPost() {
-  //   return postDb.snapshots().map((event) => null);
-  // }
+  static Stream<List<Post>> getPost() {
+    return postDb.snapshots().map((event) => getPostData(event));
+  }
 
-  // static List<Post> getPostData(QuerySnapshot snapshot) {
-  //   return snapshot.docs.map((e) {
-  //     final json = e.data as Map<String, dynamic>;
-  //     return Post(
-  //         comments: json['comments'],
-  //         detail: json['detail'],
-  //         title: json['title'],
-  //         imageUrl: json['imageUrl'],
-  //         like: Like.fromJson(json['likes']),
-  //         postId: json['postId'],
-  //         userId: json['userID']);
-  //   });
-  // }
+  static List<Post> getPostData(QuerySnapshot snapshot) {
+    return snapshot.docs.map((e) {
+      final json = e.data() as Map<String, dynamic>;
+      return Post(
+          comments: [],
+          detail: json["detail"],
+          title: json["title"],
+          imageUrl: json["imageUrl"],
+          like: Like.fromJson(json['like']),
+          postId: e.id,
+          userId: json['userId']);
+    }).toList();
+  }
 
   static Future<Either<String, bool>> addPost({
     required String title,

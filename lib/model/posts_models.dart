@@ -20,11 +20,18 @@ class Post {
 class Comment {
   final String userName;
   final String imageUrl;
-  final String commentMessage;
+  final String comment;
   Comment(
-      {required this.userName,
-      required this.commentMessage,
-      required this.imageUrl});
+      {required this.userName, required this.comment, required this.imageUrl});
+  factory Comment.fromJson(Map<String, dynamic> json) {
+    return Comment(
+        userName: json["userName"],
+        comment: json["comment"],
+        imageUrl: json["imageUrl"]);
+  }
+  Map<String, dynamic> toJson() {
+    return {'imageUrl': imageUrl, 'comment': comment, 'userName': userName};
+  }
 }
 
 class Like {
@@ -35,6 +42,9 @@ class Like {
     required this.usernames,
   });
   factory Like.fromJson(Map<String, dynamic> json) {
-    return Like(likes: json['likes'], usernames: json['username']);
+    return Like(
+        likes: json['likes'],
+        usernames:
+            (json['usernames'] as List).map((e) => e as String).toList());
   }
 }

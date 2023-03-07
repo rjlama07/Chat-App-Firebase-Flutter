@@ -1,6 +1,7 @@
 import 'package:chatapp/providers/auth_provider.dart';
 import 'package:chatapp/resources/firebase_instance.dart';
 import 'package:chatapp/services/auth_services.dart';
+import 'package:chatapp/services/post_service.dart';
 import 'package:chatapp/view/create_post/create_post.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,6 +16,7 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     final userData = ref.watch(userStream(user!.uid));
     final userstreams = ref.watch(userstream);
+    final postData = ref.watch(postStream);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -117,7 +119,7 @@ class HomePage extends ConsumerWidget {
                             data[index].firstName.toString(),
                             style: TextStyle(
                                 fontSize: 30.sp, fontWeight: FontWeight.w500),
-                          )
+                          ),
                         ],
                       ),
                     );
@@ -128,7 +130,22 @@ class HomePage extends ConsumerWidget {
                 child: CircularProgressIndicator(),
               ),
             ),
-          )
+          ),
+          Expanded(
+              child: postData.when(
+            data: (data) {
+              return ListView.builder(
+                itemCount: data.length,
+                itemBuilder: (context, index) {
+                  return Text(data[index].imageUrl);
+                },
+              );
+            },
+            error: (error, stackTrace) => Center(child: Text("$error")),
+            loading: () => const Center(
+              child: CircularProgressIndicator(),
+            ),
+          ))
         ],
       ),
     );

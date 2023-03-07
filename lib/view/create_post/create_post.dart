@@ -127,7 +127,6 @@ class CreatePost extends ConsumerWidget {
                                 detail: detailController.text.trim(),
                                 userID: user!.uid,
                                 image: image);
-                            ref.read(imageProvider.notifier).clearImage();
                           } else {
                             SnackShow.showSnackbar(
                                 context, "Please select an image", true);
