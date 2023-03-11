@@ -12,6 +12,63 @@ import 'package:get/get.dart';
 class HomePage extends ConsumerWidget {
   HomePage({super.key});
   final user = FirebaseInstances.firebaseAuth.currentUser;
+  Widget bottomSheet(Function edit, Function delete) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      height: 60.h,
+      child: Column(
+        children: [
+          InkWell(
+            onTap: () {
+              edit();
+            },
+            child: Row(
+              children: [
+                const Icon(
+                  Icons.edit,
+                  color: Colors.blue,
+                ),
+                SizedBox(
+                  width: 40.w,
+                ),
+                Text(
+                  "Edit Post",
+                  style: TextStyle(
+                      fontSize: 40.sp,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue),
+                )
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 10.h,
+          ),
+          InkWell(
+            onTap: () => delete(),
+            child: Row(
+              children: [
+                const Icon(
+                  Icons.delete,
+                  color: Colors.red,
+                ),
+                SizedBox(
+                  width: 40.w,
+                ),
+                Text(
+                  "Delete Post",
+                  style: TextStyle(
+                      fontSize: 40.sp,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.red),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context, ref) {
@@ -136,6 +193,7 @@ class HomePage extends ConsumerWidget {
               child: postData.when(
             data: (data) {
               return ListView.builder(
+                physics: const BouncingScrollPhysics(),
                 itemCount: data.length,
                 itemBuilder: (context, index) {
                   return Padding(
@@ -144,10 +202,26 @@ class HomePage extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          data[index].title,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 30.sp),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              data[index].title,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 30.sp),
+                            ),
+                            IconButton(
+                                padding: const EdgeInsets.all(0),
+                                constraints: const BoxConstraints(),
+                                onPressed: () {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    builder: (context) =>
+                                        bottomSheet(() {}, () {}),
+                                  );
+                                },
+                                icon: const Icon(Icons.more_horiz))
+                          ],
                         ),
                         CachedNetworkImage(
                             height: 150.h, imageUrl: data[index].imageUrl),
