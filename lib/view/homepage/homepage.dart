@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chatapp/providers/auth_provider.dart';
 import 'package:chatapp/resources/firebase_instance.dart';
 import 'package:chatapp/services/auth_services.dart';
@@ -137,7 +138,41 @@ class HomePage extends ConsumerWidget {
               return ListView.builder(
                 itemCount: data.length,
                 itemBuilder: (context, index) {
-                  return Text(data[index].imageUrl);
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12, vertical: 12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          data[index].title,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 30.sp),
+                        ),
+                        CachedNetworkImage(
+                            height: 150.h, imageUrl: data[index].imageUrl),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              data[index].detail,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 30.sp),
+                            ),
+                            if (data[index].userId != user?.uid)
+                              IconButton(
+                                  padding: const EdgeInsets.all(0),
+                                  constraints: const BoxConstraints(),
+                                  onPressed: () {},
+                                  icon: const Icon(
+                                    Icons.thumb_up_outlined,
+                                    color: Colors.black,
+                                  ))
+                          ],
+                        )
+                      ],
+                    ),
+                  );
                 },
               );
             },
